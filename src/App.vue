@@ -1,8 +1,10 @@
 <template>
-  <div></div>
+  <AudioToZine />
 </template>
 
 <script setup lang="ts">
+import AudioToZine from './components/AudioToZine.vue';
+
 </script>
 
 

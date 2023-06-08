@@ -1,5 +1,5 @@
 <template>
-  <div></div>
+  <h2>テキストから要約生成</h2>
 </template>
 
 <script setup lang="ts">

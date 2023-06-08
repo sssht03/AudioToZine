@@ -1,5 +1,5 @@
 <template>
-  <div></div>
+  <h2>音声ファイルから文字起こし</h2>
 </template>
 
 <script setup lang="ts">
