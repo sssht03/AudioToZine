@@ -1,5 +1,5 @@
 <template>
-  <div></div>
+  <h2>要約からタイトル生成</h2>
 </template>
 
 <script setup lang="ts">
