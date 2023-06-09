@@ -28,6 +28,6 @@ export default async function textToImages(
     return generatedImages;
   } else {
     console.error('Error while generating images:', response.statusText);
-    return null;
+    return [''];
   }
 }
