@@ -173,7 +173,7 @@ import CheckMark from './CheckMark.vue';
 import GeneratedImageList from './GeneratedImageList.vue.vue';
 import chatWithGpt from '../utils/chatWithGpt';
 import textToImage from '../utils/textToImage';
-import sleep from '../utils/sleep';
+// import sleep from '../utils/sleep';
 
 const props = defineProps<{
   transcribedText: string;
