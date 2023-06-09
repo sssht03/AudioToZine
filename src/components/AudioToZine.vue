@@ -1,9 +1,11 @@
 <template>
-  <h1 class="text-5xl font-bold">AudioToZine</h1>
-  <p>Powered by OpenAI</p>
+  <div class="w-full">
+    <h1 class="text-5xl font-bold">AudioToZine</h1>
+    <p>Powered by OpenAI</p>
 
-  <AudioToText @transcribed-text="transcribedTextHandler" />
-  <TextToZine :transcribedText="transcribedText" />
+    <AudioToText @transcribed-text="transcribedTextHandler" />
+    <TextToZine :transcribedText="transcribedText" />
+  </div>
 </template>
 
 <script setup lang="ts">
