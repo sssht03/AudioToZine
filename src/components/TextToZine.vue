@@ -58,7 +58,7 @@
       >要約したいテキストを入力</label
     >
     <textarea
-      v-model="props.transcribedText"
+      v-model="inputToSummary"
       id="inputText"
       rows="16"
       class="block w-full rounded-md border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
@@ -109,7 +109,7 @@
       <textarea
         v-model="summarizedText"
         id="summarizedText"
-        rows="4"
+        rows="8"
         class="block w-full rounded-md border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
         placeholder="ここに要約結果が入ります"
       ></textarea>
@@ -167,7 +167,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, defineProps } from 'vue';
+import { ref } from 'vue';
 import SmallProgressSpinner from './SmallProgressSpinner.vue';
 import CheckMark from './CheckMark.vue';
 import GeneratedImageList from './GeneratedImageList.vue.vue';
@@ -183,6 +183,9 @@ const props = defineProps<{
 type LoadState = 'NotStarted' | 'OnGenerating' | 'Completed';
 let loadState: LoadState = 'NotStarted';
 const stateText = ref('記事を生成する');
+
+const inputToSummary = ref(props.transcribedText);
+const inputToSummaryLength = ref(inputToSummary.value.length);
 
 // 要約
 const summaryCharacters = ref(300);
@@ -208,8 +211,22 @@ const clickSummaryButtonHandler = async () => {
 
   // 要約ステップ
   summaryState = 'OnSummaryzing';
-  const summaryPrompt = `この文章を、重要な箇所を抽出しながら${summaryCharacters.value}文字以内で要約してください。`;
-  const summaryInputData = summaryPrompt + '\n' + props.transcribedText;
+  const summaryPrompt = `# 命題
+  講演内容の要約をしようとしています。
+  次の要約ステップに沿って文章を要約し、出力してください。
+  
+  # 要約ステップ
+  1. 講演内容から重要な発言を5箇所抽出する
+  2. ステップ1で抽出したそれぞれの箇所について、前後の文脈を汲み取りながら説明を付け加える
+  3. ステップ2で説明を加えた5箇所を全て結合する
+  4. ステップ3で結合した文章を新聞記事のような体裁に${summaryCharacters.value}字程度に要約する
+
+  # 講演内容
+  ${inputToSummary.value}
+
+  # 出力
+  ここに要約ステップ4の要約内容を出力してください。`;
+  const summaryInputData = summaryPrompt + '\n' + inputToSummary.value;
   console.log('summaryInputData: ', summaryInputData);
   summarizedText.value = await chatWithGpt(summaryInputData, 'gpt-4');
   // await sleep(2000);
