@@ -185,7 +185,6 @@ let loadState: LoadState = 'NotStarted';
 const stateText = ref('記事を生成する');
 
 const inputToSummary = ref(props.transcribedText);
-const inputToSummaryLength = ref(inputToSummary.value.length);
 
 // 要約
 const summaryCharacters = ref(300);
@@ -194,13 +193,13 @@ type SummaryState = 'NotStarted' | 'OnSummaryzing' | 'SummaryCompleted';
 let summaryState: SummaryState = 'NotStarted';
 
 // タイトル
-const titleCharacters = ref(15);
+const titleCharacters = ref(10);
 const titleText = ref('');
 type TitleState = 'NotStarted' | 'OnTitleGenerating' | 'TitleCompleted';
 let titleState: TitleState = 'NotStarted';
 
 // 画像
-const imageStylePrompt = ref('雑誌の表紙のイラスト');
+const imageStylePrompt = ref('新聞に記載されるイラスト');
 const generatedImageUrls = ref(['']);
 type ImageState = 'NotStarted' | 'OnImageGenerating' | 'ImageCompleted';
 let imageState: ImageState = 'NotStarted';
@@ -236,7 +235,7 @@ const clickSummaryButtonHandler = async () => {
 
   // タイトル生成ステップ
   titleState = 'OnTitleGenerating';
-  const titlePrompt = `この文章から${summaryCharacters.value}文字程度の記事タイトルを出力してください。`;
+  const titlePrompt = `この文章から${summaryCharacters.value}文字以下で簡潔に記事タイトルを出力してください。`;
   const titleInputData = titlePrompt + '\n' + summarizedText.value;
   console.log('titleInputData: ', titleInputData);
   titleText.value = await chatWithGpt(titleInputData, 'gpt-4');

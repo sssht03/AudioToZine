@@ -2,7 +2,7 @@ const OPENAI_API_KEY = import.meta.env.VITE_OPENAI_API_KEY
 
 export default async function textToImages(
   prompt: string,
-  numImages: number = 4,
+  numImages: number = 1,
   imageSize: string = '512x512'
 ) {
   console.log('--- Text to Image ---');
